@@ -36,7 +36,7 @@ public class ShimmeringView: UIView, Shimmering {
     }
     
     public var shimmeringSpeed: CGFloat {
-        get { return shimmeringLayer.shimmeringSpeed}
+        get { return shimmeringLayer.shimmeringSpeed }
         set { shimmeringLayer.shimmeringSpeed = newValue }
     }
     
@@ -61,7 +61,7 @@ public class ShimmeringView: UIView, Shimmering {
     }
     
     public var shimmeringFadeTime: CFTimeInterval {
-        get {  return shimmeringLayer.shimmeringFadeTime }
+        return shimmeringLayer.shimmeringFadeTime
     }
     
     public var shimmeringBeginTime: CFTimeInterval {
@@ -88,7 +88,9 @@ public class ShimmeringView: UIView, Shimmering {
     private var _contentView: UIView?
     
     private var shimmeringLayer: ShimmeringLayer {
+        // swiftlint:disable force_cast
         return layer as! ShimmeringLayer
+        // swiftlint:enable force_cast
     }
     
     
@@ -102,7 +104,7 @@ public class ShimmeringView: UIView, Shimmering {
         }
     }
     
-    override public class var layerClass : AnyClass {
+    override public class var layerClass: AnyClass {
         return ShimmeringLayer.self
     }
     

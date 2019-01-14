@@ -92,7 +92,7 @@ public class ShimmeringLayer: CALayer, Shimmering {
     
     public var shimmeringFadeTime: CFTimeInterval = 0.0
     
-    public var shimmeringBeginTime: CFTimeInterval = ShimmerDefaultBeginTime {
+    public var shimmeringBeginTime: CFTimeInterval = shimmerDefaultBeginTime {
         didSet {
             if shimmeringBeginTime != oldValue {
                 updateShimmering()
@@ -243,102 +243,111 @@ public class ShimmeringLayer: CALayer, Shimmering {
         // ensure layout
         layoutIfNeeded()
         
-        let disableActions = CATransaction.disableActions()
-        if !isShimmering {
-            if disableActions {
-                // simply remove mask
-                clearMask()
-            } else {
-                // end slide
-                var slideEndTime: CFTimeInterval = 0
-                
-                if let slideAnimation = maskLayer.animation(forKey: Constant.shimmerSlideAnimationKey) {
-                    // determine total time sliding
-                    let now = CACurrentMediaTime()
-                    let slideTotalDuration: CFTimeInterval = now - slideAnimation.beginTime
-                    
-                    // determine time offset into current slide
-                    let slideTimeOffset = fmod(slideTotalDuration, slideAnimation.duration)
-                    
-                    // transition to non-repeating slide
-                    let finishAnimation = shimmerSlideFinish(slideAnimation)
-                    
-                    // adjust begin time to now - offset
-                    finishAnimation.beginTime = now - slideTimeOffset
-                    
-                    // note slide end time and begin
-                    slideEndTime = finishAnimation.beginTime + slideAnimation.duration
-                    maskLayer.add(finishAnimation, forKey: Constant.shimmerSlideAnimationKey)
-                }
-                
-                // fade in text at slideEndTime
-                let fadeInAnimation = fadeAnimation(
-                    layer: maskLayer.fadeLayer,
-                    opacity: 1.0,
-                    duration: shimmeringEndFadeDuration)
-                fadeInAnimation.delegate = self
-                fadeInAnimation.setValue(NSNumber(value: true), forKey: Constant.endFadeAnimationKey)
-                fadeInAnimation.beginTime = slideEndTime
-                maskLayer.fadeLayer.add(fadeInAnimation, forKey: Constant.fadeAnimationKey)
-                
-                // expose end time for synchronization
-                shimmeringFadeTime = slideEndTime
-            }
+        if isShimmering {
+            enableShimmering(maskLayer)
         } else {
-            // fade out text, optionally animated
-            var fadeOutAnimation: CABasicAnimation? = nil
-            if shimmeringBeginFadeDuration > 0.0 && !disableActions {
-                let animation = fadeAnimation(
-                    layer: maskLayer.fadeLayer,
-                    opacity: 0.0,
-                    duration: shimmeringBeginFadeDuration)
-                maskLayer.fadeLayer.add(animation, forKey: Constant.fadeAnimationKey)
-                fadeOutAnimation = animation
-            } else {
-                let innerDisableActions = CATransaction.disableActions()
-                CATransaction.setDisableActions(true)
-                maskLayer.fadeLayer.opacity = 0.0
-                maskLayer.fadeLayer.removeAllAnimations()
-                CATransaction.setDisableActions(innerDisableActions)
-            }
-            
-            // begin slide animation
-
-            // compute shimmer duration
-            var length: CGFloat = 0.0
-            if shimmeringDirection == .down || shimmeringDirection == .up {
-                length = contentLayer?.bounds.height ?? 0
-            } else {
-                length = contentLayer?.bounds.width ?? 0
-            }
-            let animationDuration = CFTimeInterval((length / shimmeringSpeed) + CGFloat(shimmeringPauseDuration))
+            disableShimmering(maskLayer)
+        }
+    }
+    
+    private func disableShimmering(_ maskLayer: ShimmeringMaskLayer) {
+        let disableActions = CATransaction.disableActions()
+        if disableActions {
+            // simply remove mask
+            clearMask()
+        } else {
+            // end slide
+            var slideEndTime: CFTimeInterval = 0
             
             if let slideAnimation = maskLayer.animation(forKey: Constant.shimmerSlideAnimationKey) {
-                // ensure existing slide animation repeats
-                let repeatsAnimation = shimmerSlideRepeat(
-                    slideAnimation,
-                    duration: animationDuration,
-                    direction: shimmeringDirection)
-                maskLayer.add(repeatsAnimation, forKey: Constant.shimmerSlideAnimationKey)
-            } else {
-                // add slide animation
-                let slideAnimation = shimmerSlideAnimation(duration: animationDuration, direction: shimmeringDirection)
-                slideAnimation.fillMode = .forwards
-                slideAnimation.isRemovedOnCompletion = false
-                if shimmeringBeginTime == ShimmerDefaultBeginTime {
-                    slideAnimation.beginTime = CACurrentMediaTime() + (fadeOutAnimation?.duration ?? 0)
-                } else {
-                    slideAnimation.beginTime = CACurrentMediaTime() + shimmeringBeginTime
-                }
-                maskLayer.add(slideAnimation, forKey: Constant.shimmerSlideAnimationKey)
+                // determine total time sliding
+                let now = CACurrentMediaTime()
+                let slideTotalDuration: CFTimeInterval = now - slideAnimation.beginTime
+                
+                // determine time offset into current slide
+                let slideTimeOffset = fmod(slideTotalDuration, slideAnimation.duration)
+                
+                // transition to non-repeating slide
+                let finishAnimation = shimmerSlideFinish(slideAnimation)
+                
+                // adjust begin time to now - offset
+                finishAnimation.beginTime = now - slideTimeOffset
+                
+                // note slide end time and begin
+                slideEndTime = finishAnimation.beginTime + slideAnimation.duration
+                maskLayer.add(finishAnimation, forKey: Constant.shimmerSlideAnimationKey)
             }
+            
+            // fade in text at slideEndTime
+            let fadeInAnimation = fadeAnimation(
+                layer: maskLayer.fadeLayer,
+                opacity: 1.0,
+                duration: shimmeringEndFadeDuration)
+            fadeInAnimation.delegate = self
+            fadeInAnimation.setValue(NSNumber(value: true), forKey: Constant.endFadeAnimationKey)
+            fadeInAnimation.beginTime = slideEndTime
+            maskLayer.fadeLayer.add(fadeInAnimation, forKey: Constant.fadeAnimationKey)
+            
+            // expose end time for synchronization
+            shimmeringFadeTime = slideEndTime
+        }
+    }
+    
+    private func enableShimmering(_ maskLayer: ShimmeringMaskLayer) {
+        let disableActions = CATransaction.disableActions()
+        // fade out text, optionally animated
+        var fadeOutAnimation: CABasicAnimation?
+        if shimmeringBeginFadeDuration > 0.0 && !disableActions {
+            let animation = fadeAnimation(
+                layer: maskLayer.fadeLayer,
+                opacity: 0.0,
+                duration: shimmeringBeginFadeDuration)
+            maskLayer.fadeLayer.add(animation, forKey: Constant.fadeAnimationKey)
+            fadeOutAnimation = animation
+        } else {
+            let innerDisableActions = CATransaction.disableActions()
+            CATransaction.setDisableActions(true)
+            maskLayer.fadeLayer.opacity = 0.0
+            maskLayer.fadeLayer.removeAllAnimations()
+            CATransaction.setDisableActions(innerDisableActions)
+        }
+        
+        // begin slide animation
+        
+        // compute shimmer duration
+        var length: CGFloat = 0.0
+        if shimmeringDirection == .down || shimmeringDirection == .up {
+            length = contentLayer?.bounds.height ?? 0
+        } else {
+            length = contentLayer?.bounds.width ?? 0
+        }
+        let animationDuration = CFTimeInterval((length / shimmeringSpeed) + CGFloat(shimmeringPauseDuration))
+        
+        if let slideAnimation = maskLayer.animation(forKey: Constant.shimmerSlideAnimationKey) {
+            // ensure existing slide animation repeats
+            let repeatsAnimation = shimmerSlideRepeat(
+                slideAnimation,
+                duration: animationDuration,
+                direction: shimmeringDirection)
+            maskLayer.add(repeatsAnimation, forKey: Constant.shimmerSlideAnimationKey)
+        } else {
+            // add slide animation
+            let slideAnimation = shimmerSlideAnimation(duration: animationDuration, direction: shimmeringDirection)
+            slideAnimation.fillMode = .forwards
+            slideAnimation.isRemovedOnCompletion = false
+            if shimmeringBeginTime == shimmerDefaultBeginTime {
+                slideAnimation.beginTime = CACurrentMediaTime() + (fadeOutAnimation?.duration ?? 0)
+            } else {
+                slideAnimation.beginTime = CACurrentMediaTime() + shimmeringBeginTime
+            }
+            maskLayer.add(slideAnimation, forKey: Constant.shimmerSlideAnimationKey)
         }
     }
     
     private func shimmeringLayerAnimationApplyDragCoefficient(_ animation: CAAnimation) {
-        let k = Constant.shimmeringLayerDragCoefficient
-        if k != 0 && k != 1 {
-            animation.speed = 1 / k
+        let coefficient = Constant.shimmeringLayerDragCoefficient
+        if coefficient != 0 && coefficient != 1 {
+            animation.speed = 1 / coefficient
         }
     }
     
@@ -365,30 +374,32 @@ public class ShimmeringLayer: CALayer, Shimmering {
         return animation
     }
     
+    // swiftlint:disable force_cast
     // take a shimmer slide animation and turns into repeating
     private func shimmerSlideRepeat(
-        _ a: CAAnimation,
+        _ anim: CAAnimation,
         duration: CFTimeInterval,
         direction: ShimmerDirection) -> CAAnimation {
         
-        let anim = a.copy() as! CAAnimation
-        anim.repeatCount = Float.greatestFiniteMagnitude
-        anim.duration = duration
+        let animation = anim.copy() as! CAAnimation
+        animation.repeatCount = Float.greatestFiniteMagnitude
+        animation.duration = duration
         switch direction {
         case .right, .down:
-            anim.speed = fabsf(anim.speed)
+            animation.speed = fabsf(animation.speed)
         case .left, .up:
-            anim.speed = -fabsf(anim.speed)
+            animation.speed = -fabsf(animation.speed)
         }
-        return anim
+        return animation
     }
     
     // take a shimmer slide animation and turns into finish
-    private func shimmerSlideFinish(_ a: CAAnimation) -> CAAnimation {
-        let anim = a.copy() as! CAAnimation
-        anim.repeatCount = 0
-        return anim
+    private func shimmerSlideFinish(_ anim: CAAnimation) -> CAAnimation {
+        let animation = anim.copy() as! CAAnimation
+        animation.repeatCount = 0
+        return animation
     }
+    // swiftlint:enable force_cast
     
 }
 

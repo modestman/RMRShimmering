@@ -26,7 +26,7 @@ public enum ShimmerDirection {
 
 
 /// Slide animation begin time. Default shimmering starts after fade in animation
-public let ShimmerDefaultBeginTime = CFTimeInterval.greatestFiniteMagnitude
+public let shimmerDefaultBeginTime = CFTimeInterval.greatestFiniteMagnitude
 
 
 public protocol Shimmering {
