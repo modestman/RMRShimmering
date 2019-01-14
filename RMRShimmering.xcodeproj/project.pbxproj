@@ -12,6 +12,11 @@
 		02194FB921E89B40004EFD2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02194FB721E89B40004EFD2A /* Main.storyboard */; };
 		02194FBB21E89B41004EFD2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02194FBA21E89B41004EFD2A /* Assets.xcassets */; };
 		02194FBE21E89B41004EFD2A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02194FBC21E89B41004EFD2A /* LaunchScreen.storyboard */; };
+		02194FC721E89B88004EFD2A /* Shimmering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02194FC621E89B88004EFD2A /* Shimmering.swift */; };
+		02194FC921E89E52004EFD2A /* ShimmeringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02194FC821E89E52004EFD2A /* ShimmeringView.swift */; };
+		02194FCB21E8A078004EFD2A /* ShimmeringLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02194FCA21E8A078004EFD2A /* ShimmeringLayer.swift */; };
+		02194FEE21E8F89A004EFD2A /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02194FEC21E8F89A004EFD2A /* PlaceholderView.swift */; };
+		02194FEF21E8F89A004EFD2A /* PlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02194FED21E8F89A004EFD2A /* PlaceholderView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		02194FBA21E89B41004EFD2A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02194FBD21E89B41004EFD2A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02194FBF21E89B41004EFD2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02194FC621E89B88004EFD2A /* Shimmering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shimmering.swift; sourceTree = "<group>"; };
+		02194FC821E89E52004EFD2A /* ShimmeringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmeringView.swift; sourceTree = "<group>"; };
+		02194FCA21E8A078004EFD2A /* ShimmeringLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmeringLayer.swift; sourceTree = "<group>"; };
+		02194FEC21E8F89A004EFD2A /* PlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
+		02194FED21E8F89A004EFD2A /* PlaceholderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceholderView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,13 +65,26 @@
 			isa = PBXGroup;
 			children = (
 				02194FB321E89B40004EFD2A /* AppDelegate.swift */,
+				02194FC521E89B72004EFD2A /* Shimmer */,
 				02194FB521E89B40004EFD2A /* ViewController.swift */,
 				02194FB721E89B40004EFD2A /* Main.storyboard */,
+				02194FEC21E8F89A004EFD2A /* PlaceholderView.swift */,
+				02194FED21E8F89A004EFD2A /* PlaceholderView.xib */,
 				02194FBA21E89B41004EFD2A /* Assets.xcassets */,
 				02194FBC21E89B41004EFD2A /* LaunchScreen.storyboard */,
 				02194FBF21E89B41004EFD2A /* Info.plist */,
 			);
 			path = RMRShimmering;
+			sourceTree = "<group>";
+		};
+		02194FC521E89B72004EFD2A /* Shimmer */ = {
+			isa = PBXGroup;
+			children = (
+				02194FC621E89B88004EFD2A /* Shimmering.swift */,
+				02194FC821E89E52004EFD2A /* ShimmeringView.swift */,
+				02194FCA21E8A078004EFD2A /* ShimmeringLayer.swift */,
+			);
+			path = Shimmer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,6 +147,7 @@
 			files = (
 				02194FBE21E89B41004EFD2A /* LaunchScreen.storyboard in Resources */,
 				02194FBB21E89B41004EFD2A /* Assets.xcassets in Resources */,
+				02194FEF21E8F89A004EFD2A /* PlaceholderView.xib in Resources */,
 				02194FB921E89B40004EFD2A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,8 +159,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02194FC721E89B88004EFD2A /* Shimmering.swift in Sources */,
+				02194FC921E89E52004EFD2A /* ShimmeringView.swift in Sources */,
+				02194FEE21E8F89A004EFD2A /* PlaceholderView.swift in Sources */,
 				02194FB621E89B40004EFD2A /* ViewController.swift in Sources */,
 				02194FB421E89B40004EFD2A /* AppDelegate.swift in Sources */,
+				02194FCB21E8A078004EFD2A /* ShimmeringLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,12 +9,20 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    @IBOutlet private var shimmeringViews: [ShimmeringView]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
 
+        shimmeringViews.forEach { shimmeringView in
+            shimmeringView.isShimmering = true
+            shimmeringView.shimmeringBeginFadeDuration = 0.0
+            shimmeringView.shimmeringBeginTime = 0.3
+            shimmeringView.shimmeringAnimationOpacity = 0.18
+            shimmeringView.shimmeringOpacity = 0.08
+        }
+    }
 
 }
 

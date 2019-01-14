@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,16 +13,85 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="RMRShimmering" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="a4O-zM-bAm">
+                                <rect key="frame" x="0.0" y="67" width="375" height="435"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jb4-4c-yTS" customClass="ShimmeringView" customModule="RMRShimmering" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="125"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3uo-Ev-Pcn" customClass="PlaceholderView" customModule="RMRShimmering" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="125"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="3uo-Ev-Pcn" firstAttribute="leading" secondItem="jb4-4c-yTS" secondAttribute="leading" id="EBr-ZE-yuE"/>
+                                            <constraint firstAttribute="height" constant="125" id="Lln-yZ-RQ5"/>
+                                            <constraint firstAttribute="bottom" secondItem="3uo-Ev-Pcn" secondAttribute="bottom" id="SVA-qh-vGZ"/>
+                                            <constraint firstItem="3uo-Ev-Pcn" firstAttribute="top" secondItem="jb4-4c-yTS" secondAttribute="top" id="Yeg-rN-nPN"/>
+                                            <constraint firstAttribute="trailing" secondItem="3uo-Ev-Pcn" secondAttribute="trailing" id="qMO-NA-CpS"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xb0-gh-WMn" customClass="ShimmeringView" customModule="RMRShimmering" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="155" width="375" height="125"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wOc-bd-igo" customClass="PlaceholderView" customModule="RMRShimmering" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="125"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="125" id="6QS-DB-3lT"/>
+                                            <constraint firstItem="wOc-bd-igo" firstAttribute="leading" secondItem="xb0-gh-WMn" secondAttribute="leading" id="DtH-lT-9Rd"/>
+                                            <constraint firstAttribute="trailing" secondItem="wOc-bd-igo" secondAttribute="trailing" id="Yk7-pf-d6b"/>
+                                            <constraint firstItem="wOc-bd-igo" firstAttribute="top" secondItem="xb0-gh-WMn" secondAttribute="top" id="b8i-gv-0Lc"/>
+                                            <constraint firstAttribute="bottom" secondItem="wOc-bd-igo" secondAttribute="bottom" id="bTw-ZW-XX5"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qLc-Gg-EBH" customClass="ShimmeringView" customModule="RMRShimmering" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="310" width="375" height="125"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ccr-33-4dR" customClass="PlaceholderView" customModule="RMRShimmering" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="125"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="ccr-33-4dR" secondAttribute="bottom" id="Ckr-db-wRO"/>
+                                            <constraint firstAttribute="height" constant="125" id="OwX-lr-FrR"/>
+                                            <constraint firstItem="ccr-33-4dR" firstAttribute="leading" secondItem="qLc-Gg-EBH" secondAttribute="leading" id="RMR-r1-iPJ"/>
+                                            <constraint firstItem="ccr-33-4dR" firstAttribute="top" secondItem="qLc-Gg-EBH" secondAttribute="top" id="YXV-Qd-XM0"/>
+                                            <constraint firstAttribute="trailing" secondItem="ccr-33-4dR" secondAttribute="trailing" id="odv-f1-1qv"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="a4O-zM-bAm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="gVb-Tg-Rwr"/>
+                            <constraint firstItem="a4O-zM-bAm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="47" id="oC5-o5-ljW"/>
+                            <constraint firstItem="a4O-zM-bAm" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="rq1-wz-MDT"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outletCollection property="shimmeringViews" destination="jb4-4c-yTS" collectionClass="NSMutableArray" id="4vU-d6-EWj"/>
+                        <outletCollection property="shimmeringViews" destination="xb0-gh-WMn" collectionClass="NSMutableArray" id="HFs-zB-k9G"/>
+                        <outletCollection property="shimmeringViews" destination="qLc-Gg-EBH" collectionClass="NSMutableArray" id="K1J-mA-sbq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>
